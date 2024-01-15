@@ -6,7 +6,7 @@ struct FindJobData: Codable {
 
 struct Datum: Codable , Identifiable{
     let id: Int
-    let title, detail: String?
+    var title, detail: String?
     let createdAt, updatedAt: String
     let tags: [[String: String]]?
     let wages, area: String?

@@ -37,7 +37,7 @@ struct FindJobCellView: View {
                 .padding([.top, .bottom], 1)
             HStack {
                 ForEach(findJob.tags ?? [["":""]], id: \.self) { tagPair in
-                    ForEach(tagPair.values, id: \.self) { tag in
+                    ForEach(tagPair.map { $1 }, id: \.self) { tag in
                         Text(tag)
                             .font(.system(size: 15))
                             .padding(6)

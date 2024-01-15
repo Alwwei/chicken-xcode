@@ -11,12 +11,7 @@ struct FindJobView: View {
     
     var body: some View {
         let columns = [GridItem(.flexible(), alignment: .leading)]
-//        Task {
-//            if let findHeadJobs = findHeadJobs {
-//
-//            }
-//        }
-//
+        
         NavigationStack {
             VStack {
                 SearchBarView(text: $searchText, barContent: "輸入關鍵字 ex.咖啡廳")
@@ -43,17 +38,31 @@ struct FindJobView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.white)
                     }
-                    ForEach(findHeadJobs) { job in
-                        NavigationLink(destination: FindJobDetailView(findJob: job)) {
-                            FindJobCellView(findJob: job)
-                        }
-                        Divider()
-                    }
-                    ForEach(findHeadJobs.filter({ searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false })) { job in
-                        NavigationLink(destination: FindJobDetailView(findJob: job)) {
-                            FindJobCellView(findJob: job)
-                        }
-                        Divider()
+//                    ForEach($findHeadJobs) { $job in
+//                            NavigationLink(destination: FindJobDetailView(findJob: job)) {
+//                                FindJobCellView(findJob: $job)
+//                            }
+//                            Divider()
+//                    }
+                    ForEach($findHeadJobs.filter({ text in
+                            if searchText.isEmpty {
+                                return true
+                            } else {
+                                if let t = text.title {
+                                    if t.contains(searchText) == true {
+                                        return true
+                                    } else {
+                                        return false
+                                    }
+                                }
+                                return false
+                            }
+                        })) { $job in
+                            NavigationLink(destination: FindJobDetailView(findJob: job)) {
+                                FindJobCellView(findJob: $job)
+                            }
+                            Divider()
+//                            searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false
                     }
                 }
                 Spacer()
@@ -65,11 +74,11 @@ struct FindJobView: View {
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color.white)
-                    ForEach(findBodyJobs.filter({ searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false })) { job in
-                        NavigationLink(destination: FindJobDetailView(findJob: job)) {
-                            FindJobCellView(findJob: job)
-                        }
-                    }
+//                    ForEach(findBodyJobs.filter({ searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false })) { job in
+//                        NavigationLink(destination: FindJobDetailView(findJob: job)) {
+//                            FindJobCellView(findJob: job)
+//                        }
+//                    }
                 }
             }
             .background(Color.gray.opacity(0.1))
