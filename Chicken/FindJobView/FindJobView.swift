@@ -38,31 +38,17 @@ struct FindJobView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color.white)
                     }
-//                    ForEach($findHeadJobs) { $job in
-//                            NavigationLink(destination: FindJobDetailView(findJob: job)) {
-//                                FindJobCellView(findJob: $job)
-//                            }
-//                            Divider()
-//                    }
                     ForEach($findHeadJobs.filter({ text in
                             if searchText.isEmpty {
                                 return true
                             } else {
-                                if let t = text.title {
-                                    if t.contains(searchText) == true {
-                                        return true
-                                    } else {
-                                        return false
-                                    }
-                                }
-                                return false
+                                return text.title.wrappedValue?.contains(searchText) ?? false
                             }
-                        })) { $job in
+                        })) { job in
                             NavigationLink(destination: FindJobDetailView(findJob: job)) {
-                                FindJobCellView(findJob: $job)
+                                FindJobCellView(findJob: job)
                             }
                             Divider()
-//                            searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false
                     }
                 }
                 Spacer()
@@ -74,11 +60,6 @@ struct FindJobView: View {
                         .padding(10)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .background(Color.white)
-//                    ForEach(findBodyJobs.filter({ searchText.isEmpty ? true : $0.title?.contains(searchText) ?? false })) { job in
-//                        NavigationLink(destination: FindJobDetailView(findJob: job)) {
-//                            FindJobCellView(findJob: job)
-//                        }
-//                    }
                 }
             }
             .background(Color.gray.opacity(0.1))
@@ -86,10 +67,10 @@ struct FindJobView: View {
     }
 }
 
-//struct FindJobView_Previews: PreviewProvider {
-//    static var findHeadJobs = FindJob.sampleHeadData
+struct FindJobView_Previews: PreviewProvider {
+//    static var findHeadJobs = .constant([Datum(id: 1, createdAt: "", updatedAt: "", tags: [["tag":"tag"]], wages: "160", area: "city")])
 //    static var findBodyJobs = FindJob.sampleBodyData
-//    static var previews: some View {
-//        FindJobView(findHeadJobs: findHeadJobs, findBodyJobs: findBodyJobs)
-//    }
-//}
+    static var previews: some View {
+        FindJobView(findHeadJobs: .constant([Datum(id: 1, title: "job1", detail: "content1", createdAt: "", updatedAt: "", tags: [["tag":"tag"]], wages: "160", area: "city")]), findBodyJobs: .constant([Datum(id: 2, createdAt: "", updatedAt: "", tags: [["tag":"tag"]], wages: "160", area: "city")]), barContent: "o")
+    }
+}

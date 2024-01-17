@@ -9,6 +9,7 @@ struct FindJobCellView: View {
         VStack {
             Text("         \(findJob.title ?? "")")
                 .font(.title2)
+                .foregroundColor(Color.black)
                 .bold()
                 .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
                 .offset(x: -2)
@@ -27,14 +28,17 @@ struct FindJobCellView: View {
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
                     }
                 }
+                .padding([.leading, .top], 10)
             Text(findJob.detail ?? "")
                 .font(.subheadline)
                 .foregroundColor(Color.black.opacity(0.7))
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 10)
             Text("時薪$\(findJob.wages ?? "")      \(findJob.area ?? "")")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color(.systemOrange))
                 .padding([.top, .bottom], 1)
+                .padding(.leading, 10)
             HStack {
                 ForEach(findJob.tags ?? [["":""]], id: \.self) { tagPair in
                     ForEach(tagPair.map { $1 }, id: \.self) { tag in
@@ -48,28 +52,19 @@ struct FindJobCellView: View {
 
                     }
                     .frame(minWidth: 0, alignment: .leading)
-    //                findJob.tags?.forEach({ tagPair in
-    //                    tagPair.values.forEach { value in
-    //                        Text(value)
-    //                    }
-    //                    Text(tagPair)
-    //                })
                     Spacer()
                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
                         .background(Color.blue.opacity(0.5))
                 }
-//                ForEach(findJob.tags ?? [["":""]], id: \.self) { tag in
-//                    Text("\(tag ?? ["":""])")
-//                }
             }
             .padding()
             .foregroundColor(.black)
             .background(Color.white)
             .frame(maxWidth: .infinity, alignment: .leading)
-    //        .multilineTextAlignment(.leading)
-    //                            .onTapGesture {
-    //                                self.isTapping = true
-    //                            }
+//            .multilineTextAlignment(.leading)
+//                                .onTapGesture {
+//                                    self.isTapping = true
+//                                }
             .overlay {
                 HStack {
                     Spacer()
@@ -98,16 +93,19 @@ struct FindJobCellView: View {
                             .frame(minHeight: 25, alignment: .bottom)
                     }
                     .frame(minWidth: 0, alignment: .trailing)
-                    //                .background(Color.white)
+//                    .background(Color.white)
                 }
+                .offset(y: -51)
             }
         }
+        .background(Color.white)
+//        .padding()
     }
 }
 
-//struct FindJobCellView_Previews: PreviewProvider {
+struct FindJobCellView_Previews: PreviewProvider {
 //    static var findHeadJob = FindJob.sampleHeadData[0]
-//    static var previews: some View {
-//        FindJobCellView(findJob: findHeadJob)
-//    }
-//}
+    static var previews: some View {
+        FindJobCellView(findJob: .constant(Datum(id: 1, title: "job1", detail: "content1", createdAt: "", updatedAt: "", tags: [["tag":"tag"]], wages: "160", area: "city")))
+    }
+}

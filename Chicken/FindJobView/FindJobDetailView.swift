@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FindJobDetailView: View {
-    let findJob: Datum
+    @Binding var findJob: Datum
     
     var body: some View {
         
